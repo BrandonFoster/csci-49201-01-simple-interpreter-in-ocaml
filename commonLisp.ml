@@ -2,25 +2,35 @@
 
 open Printf
 
-let invalid = 0
-let alphabetic2 = 1
-let alphadigit = 2
-let package_marker = 3
-let plus_sign = 4
-let minus_sign = 5
-let dot = 6
-let decimal_point = 7
-let ratio_marker = 8
-let double_float = 9
-let ffloat = 10
-let single_float = 11
-let long_float = 12
-let short_float = 13
-let exponent_marker = 14
+exception ExprError of string
 
-type lisp_object =
+type number = 
+  | Integer of int
+  | Ratio of (int * int)
+
+type symbol = string
+
+type atom =
   | Nil
+  | Symbol of symbol
+  | Number of number
+  | String of string
+  | Char of char
 
-(* printing *)
-let print_lisp_object lisp_obj =
-  ()
+type expr =
+  | Leaf of atom
+  | Node of (expr * expr)
+
+let car = function
+  | Node (e1, _) -> e1
+  | _ -> raise (ExprError "CAR-error")
+let cdr = function
+  | Node (_, e2) -> e2
+  | _ -> raise (ExprError "CDR-error")
+let cons e1 e2 =
+  Node (e1, e2)
+
+let rec cons_length = function
+  | Leaf Nil -> 0
+  | Leaf _ -> 1
+  | Node (_, e2) -> 1 + cons_length e2

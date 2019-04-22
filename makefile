@@ -1,5 +1,5 @@
 #Compiler Settings
-OC=ocamlopt
+OC=ocamlopt str.cmxa
 OL=ocamllex
 OP=menhir --explain --infer
 
