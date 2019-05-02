@@ -4,7 +4,7 @@ OL=ocamllex
 OP=menhir --explain --infer
 
 #Program Executable Name
-EXE=ocamlclint
+EXE=ocamllisp
 
 #Build Commands
 all: $(EXE)
